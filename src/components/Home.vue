@@ -7,7 +7,7 @@
           <div class="editable-row-operations">
             <span v-if="editableData[record.key]">
               <ATypographyLink @click="save(record.key)">Zapisz</ATypographyLink>
-              <APopconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
+              <APopconfirm title="Na pewno anulować?" @confirm="cancel(record.key)">
                 <a class="mx-2">Anuluj</a>
               </APopconfirm>
             </span>
@@ -73,7 +73,9 @@
       fat: 0,
       weight: 0,
       training: false,
-      belly: 0
+      belly: 0,
+      sleep: 0,
+      steps: 0
     });
 
     saveData(dataSource.value);
@@ -107,12 +109,20 @@
       dataIndex: 'weight'
     },
     {
-      title: 'Training',
+      title: 'Trening',
       dataIndex: 'training'
     },
     {
       title: 'Brzuch (cm)',
       dataIndex: 'belly'
+    },
+    {
+      title: 'Sen',
+      dataIndex: 'sleep'
+    },
+    {
+      title: 'Kroki',
+      dataIndex: 'steps'
     },
     {
       dataIndex: 'operation'
