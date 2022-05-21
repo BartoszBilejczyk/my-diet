@@ -52,14 +52,9 @@
   import { reactive, ref, onMounted } from 'vue';
   import cloneDeep from 'lodash/cloneDeep';
   import * as dayjs from 'dayjs';
-  import utc from 'dayjs/plugin/utc';
-  import timezone from 'dayjs/plugin/timezone';
   import 'dayjs/locale/pl';
   import useFirebase from '../use-firebase';
-  dayjs.extend(utc);
-  dayjs.extend(timezone);
 
-  dayjs.tz.setDefault('UTC');
   dayjs.locale('pl');
 
   const { getData, saveData } = useFirebase();
@@ -81,7 +76,6 @@
       belly: 0
     });
 
-    console.log(dataSource.value);
     saveData(dataSource.value);
   };
 
