@@ -51,7 +51,7 @@
   import { CheckOutlined, CloseOutlined } from '@ant-design/icons-vue';
   import { reactive, ref, onMounted } from 'vue';
   import cloneDeep from 'lodash/cloneDeep';
-  import * as dayjs from 'dayjs';
+  import dayjs from 'dayjs';
   import 'dayjs/locale/pl';
   import useFirebase from '../use-firebase';
 
