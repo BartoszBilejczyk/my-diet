@@ -33,7 +33,22 @@ export default function () {
     });
   });
 
+  const getData = async () => {
+    return await db
+      .doc(`data/data`)
+      .get()
+      .then(doc => {
+        return { id: doc.id, ...doc.data() };
+      });
+  };
+
+  const saveData = async data => {
+    await db.doc(`data/data`).set({ data });
+  };
+
   return {
-    getCurrentUser
+    getCurrentUser,
+    getData,
+    saveData
   };
 }

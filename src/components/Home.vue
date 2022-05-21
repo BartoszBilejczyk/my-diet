@@ -1,5 +1,6 @@
 <template>
   <div class="m-10">
+    <AButton @click="createNewRow">Nowy wiersz</AButton>
     <ATable :dataSource="dataSource" :columns="columns">
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.dataIndex === 'operation'">
@@ -7,17 +8,31 @@
             <span v-if="editableData[record.key]">
               <ATypographyLink @click="save(record.key)">Save</ATypographyLink>
               <APopconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
-                <a>Cancel</a>
+                <a class="mx-2">Cancel</a>
               </APopconfirm>
             </span>
             <span v-else>
-              <a @click="edit(record.key)">Edit</a>
+              <a class="mx-2" @click="edit(record.key)">Edit</a>
+              <a class="mx-2" @click="deleteRow(record.key)">Delete row</a>
             </span>
           </div>
         </template>
+        <template v-else-if="column.dataIndex === 'date'">
+          <div>
+            {{ dayjs(text).format('DD MMM YYYY (dddd)') }}
+          </div>
+        </template>
+        <template v-else-if="column.dataIndex === 'training'">
+          <ACheckbox
+            v-if="editableData[record.key]"
+            v-model:checked="editableData[record.key][column.dataIndex]"
+          />
+          <CheckOutlined v-else-if="Boolean(text)" style="color: green" />
+          <CloseOutlined v-else style="color: red" />
+        </template>
         <template v-else>
           <div>
-            <a-input
+            <AInput
               v-if="editableData[record.key]"
               v-model:value="editableData[record.key][column.dataIndex]"
               style="margin: -5px 0"
@@ -33,45 +48,87 @@
 </template>
 
 <script setup>
-  import { ref, reactive } from 'vue';
+  import { CheckOutlined, CloseOutlined } from '@ant-design/icons-vue';
+  import { reactive, ref, onMounted } from 'vue';
   import cloneDeep from 'lodash/cloneDeep';
+  import * as dayjs from 'dayjs';
+  import utc from 'dayjs/plugin/utc';
+  import timezone from 'dayjs/plugin/timezone';
+  import 'dayjs/locale/pl';
+  import useFirebase from '../use-firebase';
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
 
-  const dataSource = ref([
-    {
-      key: '1',
-      name: 'Mike',
-      age: 32,
-      address: '10 Downing Street'
-    },
-    {
-      key: '2',
-      name: 'John',
-      age: 42,
-      address: '10 Downing Street'
-    }
-  ]);
+  dayjs.tz.setDefault('UTC');
+  dayjs.locale('pl');
 
-  const columns = ref([
+  const { getData, saveData } = useFirebase();
+
+  const createNewRow = () => {
+    dataSource.value.push({
+      key: dataSource.value.length + 1,
+      date: dataSource.value.length
+        ? dayjs(dayjs(dataSource.value[dataSource.value.length - 1].date))
+            .add(1, 'day')
+            .format('YYYY-MM-DD')
+        : dayjs().format('YYYY-MM-DD'),
+      kcal: 0,
+      protein: 0,
+      carbs: 0,
+      fat: 0,
+      weight: 0,
+      training: false,
+      belly: 0
+    });
+
+    console.log(dataSource.value);
+    saveData(dataSource.value);
+  };
+
+  const dataSource = ref([]);
+
+  const columns = [
     {
-      title: 'name',
-      dataIndex: 'name',
-      width: '25%'
+      title: 'Data',
+      dataIndex: 'date'
     },
     {
-      title: 'age',
-      dataIndex: 'age',
-      width: '15%'
+      title: 'Kcal',
+      dataIndex: 'kcal'
     },
     {
-      title: 'address',
-      dataIndex: 'address',
-      width: '40%'
+      title: 'Białko',
+      dataIndex: 'protein'
     },
     {
-      title: 'operation',
+      title: 'Węgle',
+      dataIndex: 'carbs'
+    },
+    {
+      title: 'Tłuszcze',
+      dataIndex: 'fat'
+    },
+    {
+      title: 'Waga',
+      dataIndex: 'weight'
+    },
+    {
+      title: 'Training',
+      dataIndex: 'training'
+    },
+    {
+      title: 'Brzuch (cm)',
+      dataIndex: 'belly'
+    },
+    {
       dataIndex: 'operation'
     }
-  ]);
+  ];
+
+  onMounted(async () => {
+    const { data } = await getData();
+    dataSource.value = data;
+  });
 
   const editableData = reactive({});
 
@@ -79,9 +136,22 @@
     editableData[key] = cloneDeep(dataSource.value.filter(item => key === item.key)[0]);
   };
 
+  const deleteRow = key => {
+    const newData = dataSource.value.filter(item => key !== item.key);
+
+    dataSource.value = newData;
+    saveData(newData);
+  };
+
   const save = key => {
     Object.assign(dataSource.value.filter(item => key === item.key)[0], editableData[key]);
     delete editableData[key];
+
+    saveData(dataSource.value);
+  };
+
+  const saveCurrentData = () => {
+    saveData(dataSource.value);
   };
 
   const cancel = key => {

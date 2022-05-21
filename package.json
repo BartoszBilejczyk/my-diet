@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.2.3",
+    "dayjs": "^1.11.2",
     "firebase": "8.8.0",
     "lodash": "^4.17.21",
     "vue": "^3.2.25",
