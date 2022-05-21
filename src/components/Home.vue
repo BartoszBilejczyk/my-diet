@@ -6,14 +6,14 @@
         <template v-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
             <span v-if="editableData[record.key]">
-              <ATypographyLink @click="save(record.key)">Save</ATypographyLink>
+              <ATypographyLink @click="save(record.key)">Zapisz</ATypographyLink>
               <APopconfirm title="Sure to cancel?" @confirm="cancel(record.key)">
-                <a class="mx-2">Cancel</a>
+                <a class="mx-2">Anuluj</a>
               </APopconfirm>
             </span>
             <span v-else>
-              <a class="mx-2" @click="edit(record.key)">Edit</a>
-              <a class="mx-2" @click="deleteRow(record.key)">Delete row</a>
+              <a class="mx-2" @click="edit(record.key)">Edytuj</a>
+              <a class="mx-2" @click="deleteRow(record.key)">Usuń</a>
             </span>
           </div>
         </template>
