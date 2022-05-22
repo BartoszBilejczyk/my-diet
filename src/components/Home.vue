@@ -8,7 +8,7 @@
           v-if="column.dataIndex === 'kcal' && record.key === editableData[record.key]?.key"
           v-model:visible="visible"
           @ok="handleOk(record.key)"
-          style="width: 70vw; min-width: 370px"
+          style="width: auto; min-width: 50vw; max-width: 600px"
         >
           <ATable
             class="p-4"
@@ -98,13 +98,14 @@
   import dayjs from 'dayjs';
   import 'dayjs/locale/pl';
   import useFirebase from '../use-firebase';
+  import { nanoid } from 'nanoid';
 
   dayjs.locale('pl');
 
   const { getData, saveData } = useFirebase();
 
-  const foodRow = key => ({
-    key,
+  const foodRow = () => ({
+    key: nanoid(),
     meal: '',
     kcal: '0',
     protein: '0',
@@ -115,7 +116,7 @@
   const createNewRow = () => {
     dataSource.value.push({
       done: false,
-      key: dataSource.value.length + 1,
+      key: nanoid(),
       date: dataSource.value.length
         ? dayjs(dayjs(dataSource.value[dataSource.value.length - 1].date))
             .add(1, 'day')
@@ -134,14 +135,14 @@
       caffeine: '0',
       sleep: '0',
       steps: '0',
-      food: [{ ...foodRow(0) }]
+      food: [{ ...foodRow() }]
     });
 
     saveData(dataSource.value);
   };
 
   const createNewFoodRow = key => {
-    editableData[key].food.push({ ...foodRow(editableData[key].food.length) });
+    editableData[key].food.push({ ...foodRow() });
   };
 
   const dataSource = ref([]);
@@ -315,3 +316,9 @@
     visible.value = false;
   };
 </script>
+
+<style>
+  .ant-modal-body {
+    min-width: 700px !important;
+  }
+</style>
