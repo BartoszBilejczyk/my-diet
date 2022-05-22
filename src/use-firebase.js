@@ -44,6 +44,7 @@ export default function () {
 
   const saveData = async data => {
     await db.doc(`data/data`).set({ data });
+    await db.doc(`data/backupData`).set({ data });
   };
 
   return {
