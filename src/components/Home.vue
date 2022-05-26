@@ -36,6 +36,15 @@
             </template>
           </ATable>
           <AButton class="mt-6" @click="createNewFoodRow(record.key)">Nowy posiłek</AButton>
+          <div class="mt-6">
+            <AButton
+              class="mr-4"
+              v-for="meal in predefinedMeals"
+              @click="createNewFoodRow(record.key, makePredefined(meal))"
+            >
+              {{ meal.meal }}
+            </AButton>
+          </div>
         </AModal>
         <template v-if="column.dataIndex === 'operation'">
           <div class="editable-row-operations">
@@ -88,6 +97,10 @@
         </template>
       </template>
     </ATable>
+
+    <div>
+      <button @click="saveBackup">Save as backup</button>
+    </div>
   </div>
 </template>
 
@@ -99,10 +112,11 @@
   import 'dayjs/locale/pl';
   import useFirebase from '../use-firebase';
   import { nanoid } from 'nanoid';
+  import { makePredefined, predefinedMeals } from '../helpers/predefined';
 
   dayjs.locale('pl');
 
-  const { getData, saveData } = useFirebase();
+  const { getData, saveData, saveBackup } = useFirebase();
 
   const foodRow = () => ({
     key: nanoid(),
@@ -141,8 +155,8 @@
     saveData(dataSource.value);
   };
 
-  const createNewFoodRow = key => {
-    editableData[key].food.push({ ...foodRow() });
+  const createNewFoodRow = (key, newRow = { ...foodRow() }) => {
+    editableData[key].food.push(newRow);
   };
 
   const dataSource = ref([]);
@@ -259,7 +273,6 @@
 
   const deleteFoodRow = (key, foodKey) => {
     editableData[key].food = editableData[key].food.filter(item => {
-      console.log(item, foodKey);
       return foodKey !== item.key;
     });
   };
@@ -298,7 +311,6 @@
   };
 
   const handleOk = key => {
-    console.log(editableData[key]);
     ['kcal', 'protein', 'fat', 'carbs'].forEach(item => {
       editableData[key][item] = editableData[key].food.reduce((acc, curr) => {
         acc += Number(curr[item]);

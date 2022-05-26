@@ -44,12 +44,16 @@ export default function () {
 
   const saveData = async data => {
     await db.doc(`data/data`).set({ data });
+  };
+
+  const saveBackup = async data => {
     await db.doc(`data/backupData`).set({ data });
   };
 
   return {
     getCurrentUser,
     getData,
-    saveData
+    saveData,
+    saveBackup
   };
 }
