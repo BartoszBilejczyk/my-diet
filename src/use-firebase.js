@@ -35,7 +35,7 @@ export default function () {
 
   const getData = async () => {
     return await db
-      .doc(`data/backupData`)
+      .doc(`data/data`)
       .get()
       .then(doc => {
         return { id: doc.id, ...doc.data() };
@@ -43,7 +43,7 @@ export default function () {
   };
 
   const saveData = async data => {
-    await db.doc(`data/backupData`).set({ data });
+    await db.doc(`data/data`).set({ data });
   };
 
   const saveBackup = async data => {
