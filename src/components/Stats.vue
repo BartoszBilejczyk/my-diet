@@ -39,21 +39,17 @@
       };
     })
   );
-  const selectedMonth = ref(0);
+  const selectedMonth = ref(dayjs().month() + 1);
   const daysInMonth = computed(() => dayjs(selectedMonth.value).daysInMonth());
 
   const labels = computed(() => {
-    console.log(selectedMonth.value);
     return dataSource.value
-      .filter(row => dayjs(row.date).month() === selectedMonth)
+      .filter(row => dayjs(row.date).month() === selectedMonth.value - 1)
       .map(row => dayjs(row.date).format('D/MM'));
   });
 
   const getDataSet = label => {
-    console.log(selectedMonth.value);
-    const elo = dataSource.value.filter(
-      row => Number(dayjs(row.date).format('M')) === selectedMonth
-    );
+    const elo = dataSource.value.filter(row => dayjs(row.date).month() === selectedMonth.value - 1);
 
     return [
       {
@@ -120,6 +116,5 @@
   onMounted(async () => {
     const { data } = await getData();
     dataSource.value = data;
-    selectedMonth.value = dayjs().month();
   });
 </script>
