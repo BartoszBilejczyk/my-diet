@@ -99,7 +99,7 @@
     </ATable>
 
     <div>
-      <button @click="saveBackup">Save as backup</button>
+      <button @click="saveBackup(dataSource)">Save as backup</button>
     </div>
   </div>
 </template>
