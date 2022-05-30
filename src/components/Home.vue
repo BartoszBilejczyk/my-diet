@@ -305,6 +305,10 @@
   };
 
   const calculatePercentage = (key, childKey, factor = 4) => {
+    if (editableData[key].kcal === 0) {
+      return `0%`;
+    }
+
     return (
       (((editableData[key][childKey] * factor) / editableData[key].kcal) * 100).toFixed() + '%'
     );

@@ -14,7 +14,7 @@
     </div>
     <div class="flex flex-wrap">
       <div class="w-1/3 p-4 my-6" v-for="value in charts">
-        <BarChart :height="300" :chartData="value" />
+        <component :is="value.component" :height="300" :chartData="value" />
         <div class="p-4">
           <div>
             Średnia 7-dniowa
@@ -69,10 +69,24 @@
     ];
   };
 
+  const getBoolDataSet = label => {
+    return [
+      {
+        label: label.toUpperCase(),
+        data: monthFilteredData.value.map(e => (e[label] ? 1 : 0)),
+        backgroundColor: 'darkgreen'
+      }
+    ];
+  };
+
   const getAverage = (key, days = 7) => {
     const data = dataSource.value.slice(-days).filter(item => Number(item[key]) !== 0);
     const sum = data.reduce((a, b) => Number(a) + Number(b[key]), 0);
     return (sum / data.length).toFixed(0);
+  };
+
+  const getCount = (key, days = 7) => {
+    return dataSource.value.slice(-days).filter(item => item[key]).length;
   };
 
   const charts = computed(() => {
@@ -95,7 +109,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('sleep'),
-        thirtyDayAvg: getAverage('sleep', 30)
+        thirtyDayAvg: getAverage('sleep', 30),
+        component: BarChart
       },
       steps: {
         labels: labels.value,
@@ -104,7 +119,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('steps'),
-        thirtyDayAvg: getAverage('steps', 30)
+        thirtyDayAvg: getAverage('steps', 30),
+        component: BarChart
       },
       belly: {
         labels: labels.value,
@@ -113,7 +129,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('belly'),
-        thirtyDayAvg: getAverage('belly', 30)
+        thirtyDayAvg: getAverage('belly', 30),
+        component: BarChart
       },
       caffeine: {
         labels: labels.value,
@@ -122,20 +139,39 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('caffeine'),
-        thirtyDayAvg: getAverage('caffeine', 30)
+        thirtyDayAvg: getAverage('caffeine', 30),
+        component: BarChart
       },
-      // training: {
-      //   labels: labels.value,
-      //   datasets: getDataSet('training')
-      // },
-      // stretch: {
-      //   labels: labels.value,
-      //   datasets: getDataSet('stretch')
-      // },
-      // meditation: {
-      //   labels: labels.value,
-      //   datasets: getDataSet('meditation')
-      // },
+      training: {
+        labels: labels.value,
+        options: {
+          plugins: defaultPlugins
+        },
+        datasets: getBoolDataSet('training'),
+        sevenDayAvg: getCount('training'),
+        thirtyDayAvg: getCount('training', 30),
+        component: BarChart
+      },
+      stretch: {
+        labels: labels.value,
+        options: {
+          plugins: defaultPlugins
+        },
+        datasets: getBoolDataSet('sauna'),
+        sevenDayAvg: getCount('sauna'),
+        thirtyDayAvg: getCount('sauna', 30),
+        component: BarChart
+      },
+      meditation: {
+        labels: labels.value,
+        options: {
+          plugins: defaultPlugins
+        },
+        datasets: getBoolDataSet('meditation'),
+        sevenDayAvg: getCount('meditation'),
+        thirtyDayAvg: getCount('meditation', 30),
+        component: BarChart
+      },
       kcal: {
         labels: labels.value,
         datasets: getDataSet('kcal'),
@@ -143,7 +179,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('kcal'),
-        thirtyDayAvg: getAverage('kcal', 30)
+        thirtyDayAvg: getAverage('kcal', 30),
+        component: BarChart
       },
       protein: {
         labels: labels.value,
@@ -152,7 +189,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('protein'),
-        thirtyDayAvg: getAverage('protein', 30)
+        thirtyDayAvg: getAverage('protein', 30),
+        component: BarChart
       },
       carbs: {
         labels: labels.value,
@@ -161,7 +199,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('carbs'),
-        thirtyDayAvg: getAverage('carbs', 30)
+        thirtyDayAvg: getAverage('carbs', 30),
+        component: BarChart
       },
       fat: {
         labels: labels.value,
@@ -170,7 +209,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('fat'),
-        thirtyDayAvg: getAverage('fat', 30)
+        thirtyDayAvg: getAverage('fat', 30),
+        component: BarChart
       },
       weight: {
         labels: labels.value,
@@ -179,7 +219,8 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('weight'),
-        thirtyDayAvg: getAverage('weight', 30)
+        thirtyDayAvg: getAverage('weight', 30),
+        component: BarChart
       }
     };
   });
