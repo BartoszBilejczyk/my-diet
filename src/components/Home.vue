@@ -2,7 +2,12 @@
   <div class="m-10">
     <AButton @click="createNewRow">Nowy wiersz</AButton>
     {{ editableData['2']?.food }}
-    <ATable :dataSource="dataSource" :columns="columns" :pagination="false">
+    <ATable
+      v-if="dataSource.length"
+      :dataSource="dataSource"
+      :columns="columns"
+      :pagination="false"
+    >
       <template #bodyCell="{ column, text, record }">
         <AModal
           v-if="column.dataIndex === 'kcal' && record.key === editableData[record.key]?.key"
