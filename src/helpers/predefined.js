@@ -2,10 +2,18 @@ import { nanoid } from 'nanoid';
 
 export const coffee = {
   meal: 'Coffee',
-  kcal: '50',
+  kcal: '57',
   protein: '3',
   carbs: '4.5',
   fat: '3'
+};
+
+export const coffee2Percent = {
+  meal: 'Coffee 1.5%',
+  kcal: '45',
+  protein: '3',
+  carbs: '4.5',
+  fat: '1.$'
 };
 
 export const huelBlack = {
@@ -32,6 +40,14 @@ export const mate = {
   fat: '0'
 };
 
+export const lipton200Ml = {
+  meal: 'Lipton 200 Ml',
+  kcal: '18',
+  protein: '0',
+  carbs: '4.5',
+  fat: '0'
+};
+
 export const egg = {
   meal: 'Egg',
   kcal: '75',
@@ -40,7 +56,7 @@ export const egg = {
   fat: '5'
 };
 
-export const predefinedMeals = [coffee, huel, huelBlack, mate, egg];
+export const predefinedMeals = [coffee, coffee2Percent, huel, huelBlack, mate, lipton200Ml, egg];
 
 export const makePredefined = ({ meal, kcal, protein, carbs, fat }) => ({
   key: nanoid(),
