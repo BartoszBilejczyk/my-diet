@@ -56,7 +56,24 @@ export const egg = {
   fat: '5'
 };
 
-export const predefinedMeals = [coffee, coffee2Percent, huel, huelBlack, mate, lipton200Ml, egg];
+export const cottageCheese = {
+  meal: 'Serek wiejski 28g',
+  kcal: '185',
+  protein: '28',
+  carbs: '5',
+  fat: '4'
+};
+
+export const predefinedMeals = [
+  coffee,
+  coffee2Percent,
+  huel,
+  huelBlack,
+  mate,
+  lipton200Ml,
+  egg,
+  cottageCheese
+];
 
 export const makePredefined = ({ meal, kcal, protein, carbs, fat }) => ({
   key: nanoid(),
