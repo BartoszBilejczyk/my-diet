@@ -1,10 +1,9 @@
 <template>
-  <div class="m-10">
-    <AButton @click="createNewRow">Nowy wiersz</AButton>
-    {{ editableData['2']?.food }}
+  <div class="m-5 pb-10">
+    <AButton class="mb-4" @click="createNewRow">Nowy wiersz</AButton>
     <ATable
       v-if="dataSource.length"
-      :dataSource="dataSource"
+      :dataSource="[...dataSource].reverse()"
       :columns="columns"
       :pagination="false"
     >
@@ -341,5 +340,12 @@
 <style>
   .ant-modal-body {
     min-width: 700px !important;
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td,
+  .ant-table tfoot > tr > th,
+  .ant-table tfoot > tr > td {
+    padding: 10px 6px;
   }
 </style>

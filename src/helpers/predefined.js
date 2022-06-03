@@ -13,7 +13,7 @@ export const coffee2Percent = {
   kcal: '45',
   protein: '3',
   carbs: '4.5',
-  fat: '1.$'
+  fat: '1.5'
 };
 
 export const huelBlack = {
@@ -64,6 +64,14 @@ export const cottageCheese = {
   fat: '4'
 };
 
+export const cottageCheeseLight = {
+  meal: 'Serek wiejski Light',
+  kcal: '166',
+  protein: '22',
+  carbs: '6',
+  fat: '6'
+};
+
 export const predefinedMeals = [
   coffee,
   coffee2Percent,
@@ -72,7 +80,8 @@ export const predefinedMeals = [
   mate,
   lipton200Ml,
   egg,
-  cottageCheese
+  cottageCheese,
+  cottageCheeseLight
 ];
 
 export const makePredefined = ({ meal, kcal, protein, carbs, fat }) => ({
