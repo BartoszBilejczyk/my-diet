@@ -79,10 +79,10 @@
     ];
   };
 
-  const getAverage = (key, days = 7) => {
+  const getAverage = (key, toFixed = 0, days = 7) => {
     const data = dataSource.value.slice(-days).filter(item => Number(item[key]) !== 0);
     const sum = data.reduce((a, b) => Number(a) + Number(b[key]), 0);
-    return (sum / data.length).toFixed(0);
+    return (sum / data.length).toFixed(toFixed);
   };
 
   const getCount = (key, days = 7) => {
@@ -108,8 +108,8 @@
         options: {
           plugins: defaultPlugins
         },
-        sevenDayAvg: getAverage('sleep'),
-        thirtyDayAvg: getAverage('sleep', 30),
+        sevenDayAvg: getAverage('sleep', 1),
+        thirtyDayAvg: getAverage('sleep', 1, 30),
         component: BarChart
       },
       steps: {
@@ -119,7 +119,7 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('steps'),
-        thirtyDayAvg: getAverage('steps', 30),
+        thirtyDayAvg: getAverage('steps', 0, 30),
         component: BarChart
       },
       belly: {
@@ -128,8 +128,8 @@
         options: {
           plugins: defaultPlugins
         },
-        sevenDayAvg: getAverage('belly'),
-        thirtyDayAvg: getAverage('belly', 30),
+        sevenDayAvg: getAverage('belly', 1),
+        thirtyDayAvg: getAverage('belly', 1, 30),
         component: BarChart
       },
       caffeine: {
@@ -139,7 +139,7 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('caffeine'),
-        thirtyDayAvg: getAverage('caffeine', 30),
+        thirtyDayAvg: getAverage('caffeine', 0, 30),
         component: BarChart
       },
       training: {
@@ -179,7 +179,7 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('kcal'),
-        thirtyDayAvg: getAverage('kcal', 30),
+        thirtyDayAvg: getAverage('kcal', 0, 30),
         component: BarChart
       },
       protein: {
@@ -189,7 +189,7 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('protein'),
-        thirtyDayAvg: getAverage('protein', 30),
+        thirtyDayAvg: getAverage('protein', 0, 30),
         component: BarChart
       },
       carbs: {
@@ -199,7 +199,7 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('carbs'),
-        thirtyDayAvg: getAverage('carbs', 30),
+        thirtyDayAvg: getAverage('carbs', 0, 30),
         component: BarChart
       },
       fat: {
@@ -209,7 +209,7 @@
           plugins: defaultPlugins
         },
         sevenDayAvg: getAverage('fat'),
-        thirtyDayAvg: getAverage('fat', 30),
+        thirtyDayAvg: getAverage('fat', 0, 30),
         component: BarChart
       },
       weight: {
@@ -218,8 +218,8 @@
         options: {
           plugins: defaultPlugins
         },
-        sevenDayAvg: getAverage('weight'),
-        thirtyDayAvg: getAverage('weight', 30),
+        sevenDayAvg: getAverage('weight', 2),
+        thirtyDayAvg: getAverage('weight', 2, 30),
         component: BarChart
       }
     };
