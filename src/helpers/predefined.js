@@ -72,6 +72,38 @@ export const cottageCheeseLight = {
   fat: '6'
 };
 
+export const chipsZPieca30g = {
+  meal: 'Chipsy Z Pieca 30g',
+  kcal: '133',
+  protein: '1.5',
+  carbs: '21',
+  fat: '4.3'
+};
+
+export const curryPolPorcji = {
+  meal: 'Curry pół porcji',
+  kcal: '365',
+  protein: '25',
+  carbs: '40',
+  fat: '15'
+};
+
+export const princePolo = {
+  meal: 'Price Polo',
+  kcal: '266',
+  protein: '1',
+  carbs: '30',
+  fat: '15'
+};
+
+export const truskawki100g = {
+  meal: 'Truskawki 100g',
+  kcal: '33',
+  protein: '0.7',
+  carbs: '8',
+  fat: '0.4'
+};
+
 export const predefinedMeals = [
   coffee,
   coffee2Percent,
@@ -81,7 +113,11 @@ export const predefinedMeals = [
   lipton200Ml,
   egg,
   cottageCheese,
-  cottageCheeseLight
+  cottageCheeseLight,
+  chipsZPieca30g,
+  curryPolPorcji,
+  princePolo,
+  truskawki100g
 ];
 
 export const makePredefined = ({ meal, kcal, protein, carbs, fat }) => ({

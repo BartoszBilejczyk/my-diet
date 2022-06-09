@@ -42,7 +42,7 @@
           <AButton class="mt-6" @click="createNewFoodRow(record.key)">Nowy posiłek</AButton>
           <div class="mt-6">
             <AButton
-              class="mr-4"
+              class="mr-3 mb-3"
               v-for="meal in predefinedMeals"
               @click="createNewFoodRow(record.key, makePredefined(meal))"
             >
