@@ -322,7 +322,7 @@
     ['kcal', 'protein', 'fat', 'carbs'].forEach(item => {
       editableData[key][item] = editableData[key].food.reduce((acc, curr) => {
         acc += Number(curr[item]);
-        return Number(acc);
+        return Number(acc.toFixed(1));
       }, 0);
     });
 
